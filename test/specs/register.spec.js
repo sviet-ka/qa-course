@@ -1,4 +1,5 @@
 import RegisterPage from '../pages/RegisterPage';
+import testUser from "../registerData";
 
 before(() => {
   RegisterPage.open();
@@ -32,18 +33,14 @@ describe('Verify all elements present on the Register page', () => {
   });
 
   it('should verify "User with this e-mail exists" error is thrown', () => {
-    RegisterPage.firstNameInput.setValue('Ivan');
-    RegisterPage.lastNameInput.setValue('Ivanov');
-    RegisterPage.emailNameInput.setValue('ivanov@gmail.com');
-    RegisterPage.passwordInput.setValue('12345kk789');
+    RegisterPage.firstNameInput.setValue(testUser.firstName);
+    RegisterPage.lastNameInput.setValue(testUser.lastName);
+    RegisterPage.emailNameInput.setValue(testUser.email);
+    RegisterPage.passwordInput.setValue(testUser.password);
     RegisterPage.submitForm();
     browser.pause(3000);
-    // how to delete existing user?
-    RegisterPage.firstNameInput.setValue('Ivan');
-    RegisterPage.lastNameInput.setValue('Ivanov');
-    RegisterPage.emailNameInput.setValue('ivanov@gmail.com');
-    RegisterPage.passwordInput.setValue('12345kk789');
-    RegisterPage.submitForm();
+
+
     expect(RegisterPage.errorEmailExists).to.be.ok;
     expect(RegisterPage.errorEmailExistsText.getText()).eq('User with this e-mail exists');
   });
